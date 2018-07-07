@@ -65,6 +65,7 @@ def main(download=True, run_org=True, run_new=True):
             'param_nlayers': (2, ),
             'train_iters': (60000, ),
             'batch_size': (1024, ),
+            'relu_alpha': (None, ),
         }
         ret_new = runner.run_experiment(
             data_path, arg_list=runner.misc.make_arguments(ac))

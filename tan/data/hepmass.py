@@ -1,3 +1,6 @@
+""" Based on https://github.com/gpapamak/maf/blob/master/datasets/hepmass.py
+Code to recreate dataset used in MAF paper.
+"""
 import pandas as pd
 import numpy as np
 import gzip
@@ -86,7 +89,7 @@ def download_and_make_data(datapath):
     print('Downloading...')
     filename_train = wget.download(url_train, path)
     filename_test = wget.download(url_test, path)
-    print('Extracting...')
+    print('\nExtracting...')
     with gzip.open(filename_train, 'rb') as f_in:
         with open(join(path, '1000_train.csv'), 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
