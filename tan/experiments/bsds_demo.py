@@ -48,7 +48,7 @@ def main(download=True, run_org=True, run_new=True):
         plt.xlabel('first dim')
         plt.ylabel('last dim')
         fig.legend((testax, sampax), ('Test', 'Sampled'))
-        fig_path = os.path.join(datadir, 'hepmass/firstlast.png')
+        fig_path = os.path.join(datadir, 'bsds/firstlast.png')
         fig.savefig(fig_path)
     else:
         ret = None
@@ -89,7 +89,7 @@ def main(download=True, run_org=True, run_new=True):
         plt.xlabel('first dim')
         plt.ylabel('last dim')
         fig.legend((testax, sampax), ('Test', 'Sampled'))
-        fig_path = os.path.join(datadir, 'hepmass/new_firstlast.png')
+        fig_path = os.path.join(datadir, 'bsds/new_firstlast.png')
         fig.savefig(fig_path)
     else:
         ret_new = None
