@@ -8,7 +8,7 @@ from ..data import hepmass as hepmass
 from ..model import transforms as trans
 
 
-def main(download=True, run_org=True, run_new=True):
+def main(download=True, run_org=True, run_new=True, ntrls=1):
     # Download and setup data.
     home = os.path.expanduser('~')
     datadir = os.path.join(home, 'data/tan')
@@ -25,11 +25,16 @@ def main(download=True, run_org=True, run_new=True):
             'trans_funcs': ([trans.simple_rnn_transform, ], ),
             'cond_func': (runner.conds.rnn_model, ),
             'param_nlayers': (2, ),
+            'trial': range(ntrls),
         }
         ret = runner.run_experiment(
             data_path, arg_list=runner.misc.make_arguments(ac))
-        print('{}\nAverage Test Log-Likelihood: {}'.format(
-            data_path, runner.np.mean(ret[0]['results']['test_llks'])))
+        test_llks = ret[0]['results']['test_llks']
+        mean_test_llks = np.mean(test_llks)
+        stderr_test_llks = np.std(test_llks)
+        print('{}\nAverage Test Log-Likelihood: {} +/- {}'.format(
+            data_path, mean_test_llks,
+            2*stderr_test_llks/np.sqrt(len(test_llks))))
         # plot samples
         samples = ret[0]['results']['samples']
         perm = np.random.permutation(data['test'].shape[0])[:1024]
@@ -66,11 +71,16 @@ def main(download=True, run_org=True, run_new=True):
             'train_iters': (60000, ),
             'batch_size': (1024, ),
             'relu_alpha': (None, ),
+            'trial': range(ntrls),
         }
         ret_new = runner.run_experiment(
             data_path, arg_list=runner.misc.make_arguments(ac))
-        print('{}\nNew Average Test Log-Likelihood: {}'.format(
-            data_path, runner.np.mean(ret_new[0]['results']['test_llks'])))
+        test_llks = ret_new[0]['results']['test_llks']
+        mean_test_llks = np.mean(test_llks)
+        stderr_test_llks = np.std(test_llks)
+        print('{}\nAverage Test Log-Likelihood: {} +/- {}'.format(
+            data_path, mean_test_llks,
+            2*stderr_test_llks/np.sqrt(len(test_llks))))
         # plot samples
         samples = ret_new[0]['results']['samples']
         perm = np.random.permutation(data['test'].shape[0])[:1024]

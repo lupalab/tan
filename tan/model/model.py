@@ -104,13 +104,21 @@ class TANModel(Model):
             assert conditioning is not None  # Need to also train conditioning.
 
         # Do transformation on input variables.
-        with tf.variable_scope('transformations') as trans_scope:
+        # TODO: Regularizer option
+        with tf.variable_scope(
+            'transformations',
+            # regularizer=tf.contrib.layers.l2_regularizer(1.0, 'l2_trans_reg'),
+        ) as trans_scope:
             self.z, self.logdet, self.invmap = trans.transformer(
                 inputs, self.transformations,
                 conditioning if self.trans_conditioning else None)
 
         # Get conditional parameters, feed through more layers
-        with tf.variable_scope('conditionals'):
+        # TODO: Regularizer option
+        with tf.variable_scope(
+            'conditionals',
+            # regularizer=tf.contrib.layers.l2_regularizer(1.0, 'l2_cond_reg'),
+        ):
             if self.param_nlayers is not None:
 
                 def param_func(params, conditioning=None,
