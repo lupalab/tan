@@ -195,10 +195,16 @@ def make_trainer(dataset, base_save_path, base_log_path,
 
         config = econfig.RedConfig(**trial_args)
         # Make directories specific to experiment trial.
-        save_path = os.path.join(base_save_path, get_exp_name(args))
-        misc.make_path(save_path)
-        log_path = os.path.join(base_log_path, get_exp_name(args))
-        misc.make_path(log_path)
+        if base_save_path is not None:
+            save_path = os.path.join(base_save_path, get_exp_name(args))
+            misc.make_path(save_path)
+        else:
+            AttributeError('Must provide save path for validating model')
+        if base_log_path is not None:
+            log_path = os.path.join(base_log_path, get_exp_name(args))
+            misc.make_path(log_path)
+        else:
+            log_path = None
         # Save config for easy model loading.
         try:
             pickle.dump(
@@ -211,8 +217,12 @@ def make_trainer(dataset, base_save_path, base_log_path,
         with exp.graph.as_default():
             res_dicts = exp.main()
         # Save results.
-        pickle.dump(
-            res_dicts, open(os.path.join(log_path, 'result.p'), 'wb'))
+        if log_path is not None:
+            pickle.dump(
+                res_dicts, open(os.path.join(log_path, 'result.p'), 'wb'))
+        else:
+            pickle.dump(
+                res_dicts, open(os.path.join(save_path, 'result.p'), 'wb'))
         return res_dicts
 
     return main
@@ -226,7 +236,8 @@ def run_experiment(data, arg_list=ARG_LIST, def_args=DEF_ARGS,
                    exp_class=experiment.Experiment,
                    fetcher_class=bfetchers.DatasetFetchers,
                    estimator='TAN', retries=1,
-                   log_path=None, save_path=None, experiments_name=None):
+                   log_path=None, save_path=None, experiments_name=None,
+                   no_log=False):
     # Set up paths.
     if log_path is None or save_path is None:
         home = os.path.expanduser('~')
@@ -240,11 +251,17 @@ def run_experiment(data, arg_list=ARG_LIST, def_args=DEF_ARGS,
         save_path = save_path if save_path is not None else \
             os.path.join(
                 home, 'de_models', estimator, data_name, experiments_name)
-    misc.make_path(log_path)
+    if no_log:
+        log_path = None
+    else:
+        misc.make_path(log_path)
     misc.make_path(save_path)
+    print('log path: {}\nsave path: {}'.format(log_path, save_path))
     # Get results for all hyperparameter choices
     main = make_trainer(data, save_path, log_path, exp_class=exp_class,
                         fetcher_class=fetcher_class, **def_args)
+    if no_log:
+        log_path = save_path
     results = []
     best = None
     for ai in range(len(arg_list)):

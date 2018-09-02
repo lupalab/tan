@@ -256,6 +256,8 @@ class RedTrainer:
         best_loss = None
         train_operation = self._train_op
         for i in xrange(self._train_iters):
+            # if i >= 2250:
+            #     import pdb; pdb.set_trace()  # XXX BREAKPOINT
             # Decay the learning rate.
             if i % self._decay_interval == 0:
                 if i > 0:
@@ -274,6 +276,7 @@ class RedTrainer:
                     (self._loss_op, train_operation), feed_dict=feed_dict
                 )
                 self._print_loss(i, train_loss, writer=self._train_writer)
+                # self._print_loss(i, train_loss, writer=None)
                 # Abort training if we have NaN loss
                 # TODO: use the last saved model with a lower learning rate?
                 if np.isnan(train_loss):
