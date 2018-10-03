@@ -1,5 +1,6 @@
 import os
 import runner
+import copy
 import matplotlib; matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt  # noqa
 from mpl_toolkits.mplot3d import Axes3D  # noqa
@@ -55,8 +56,7 @@ def main(download=True):
         download_file_from_google_drive(FILEID, data_path)
     print('Loading test data for plotting.')
     # Options
-    reload(runner)
-    ac = runner.ARG_CHOICES_UNTIED
+    ac = copy.copy(runner.ARG_CHOICES_UNTIED)
     ac['trans_funcs'] = (ac['trans_funcs'][1], )
     ac['first_trainable_A'] = (True, )
     ac['first_do_linear_map'] = (True, )
@@ -73,7 +73,7 @@ def main(download=True):
     noisestd = 0.0
     # Train
     ret = runner.run_experiment(
-        '/zfsauton/home/joliva/data/modelnet/aeroplane.p',
+        data_path,
         arg_list=runner.misc.make_arguments(ac),
         exp_class=emb_exp.EmbedExperiment,
         fetcher_class=pfetcher.generate_fetchers(
