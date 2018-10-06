@@ -8,26 +8,31 @@ class Experiment:
     # TODO: make all arguements optional, load config from
     # save_location+'config.p' when not given, resolve dimension, and add
     # option to restore
-    def __init__(self, config, summary_location, save_location, fetchers):
+    def __init__(self, config, summary_location, save_location, fetchers=None,
+                 graph=None, inputs_pl=None, conditioning_pl=None):
         self.config = config
         self.summary_location = summary_location
         self.save_location = save_location
         self.fetchers = fetchers
         # Set up model/trainer in graph
-        tf.reset_default_graph()
-        self.graph = tf.Graph()
+        if graph is None:
+            tf.reset_default_graph()
+            self.graph = tf.Graph()
+        else:
+            self.graph = graph
         with self.graph.as_default():
-            if fetchers.train.ndatasets > 1:
-                # Labeled data.
-                inputs_pl = tf.placeholder(
-                    tf.float32, (None, fetchers.dim[0]), 'inputs')
-                conditioning_pl = tf.placeholder(
-                    tf.float32, (None, fetchers.dim[1]), 'conditioning')
-            else:
-                # Unlabeled data.
-                inputs_pl = tf.placeholder(tf.float32, (None, fetchers.dim),
-                                           'inputs')
-                conditioning_pl = None
+            if fetchers is not None:  # Use given inputs_pl and conditioning_pl
+                if fetchers.train.ndatasets > 1:
+                    # Labeled data.
+                    inputs_pl = tf.placeholder(
+                        tf.float32, (None, fetchers.dim[0]), 'inputs')
+                    conditioning_pl = tf.placeholder(
+                        tf.float32, (None, fetchers.dim[1]), 'conditioning')
+                else:
+                    # Unlabeled data.
+                    inputs_pl = tf.placeholder(
+                        tf.float32, (None, fetchers.dim), 'inputs')
+                    conditioning_pl = None
             if config.dropout_keeprate_val is not None and \
                     config.dropout_keeprate_val < 1.0:
                 dropout_keeprate = tf.placeholder(tf.float32, [],
