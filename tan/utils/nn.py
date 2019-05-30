@@ -1,6 +1,5 @@
 import tensorflow as tf
 import numpy as np
-from linear import linear
 
 
 def lrelu(x, leak=0.2, name='lrelu'):

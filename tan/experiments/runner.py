@@ -237,10 +237,11 @@ def run_experiment(data, arg_list=ARG_LIST, def_args=DEF_ARGS,
                    fetcher_class=bfetchers.DatasetFetchers,
                    estimator='TAN', retries=1,
                    log_path=None, save_path=None, experiments_name=None,
-                   no_log=False):
+                   home=None, no_log=False):
     # Set up paths.
-    if log_path is None or save_path is None:
+    if home is None:
         home = os.path.expanduser('~')
+    if log_path is None or save_path is None:
         data_name = os.path.basename(data)
         experiments_name = \
             experiments_name if experiments_name is not None else \

@@ -1,7 +1,7 @@
 import tensorflow as tf
 from ..utils import misc
-import sru
-import utils
+from . import sru
+from . import utils
 
 
 class GRUCell:

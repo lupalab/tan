@@ -2,9 +2,9 @@ from abc import ABCMeta, abstractmethod
 import tensorflow as tf
 import numpy as np
 from ..utils import nn
-import transforms as trans
-import likelihoods as likes
-import conditionals as conds
+from . import transforms as trans
+from . import likelihoods as likes
+from . import conditionals as conds
 
 
 class Model:

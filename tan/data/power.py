@@ -78,7 +78,7 @@ def download_and_make_data(datapath):
     misc.make_path(path)
     print('Downloading...')
     filename = wget.download(url, path)
-    print('Extracting...')
+    print('\nExtracting...')
     zip_ref = zipfile.ZipFile(filename, 'r')
     zip_ref.extractall(path)
     zip_ref.close()

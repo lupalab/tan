@@ -1,5 +1,5 @@
 import tensorflow as tf
-import trainer
+from . import trainer
 from ..model import model as mod
 
 
@@ -9,7 +9,8 @@ class Experiment:
     # save_location+'config.p' when not given, resolve dimension, and add
     # option to restore
     def __init__(self, config, summary_location, save_location, fetchers=None,
-                 graph=None, inputs_pl=None, conditioning_pl=None):
+                 graph=None, inputs_pl=None, conditioning_pl=None,
+                 get_trainer=True):
         self.config = config
         self.summary_location = summary_location
         self.save_location = save_location
@@ -39,7 +40,6 @@ class Experiment:
                                                   'dropout_keeprate')
             else:
                 dropout_keeprate = None
-            self.sess = tf.Session()
             with tf.variable_scope('TAN', initializer=config.initializer):
                 with tf.variable_scope('model'):
                     self.model = mod.TANModel(
@@ -55,35 +55,39 @@ class Experiment:
                         sample_size=config.sample_batch_size)
                     self.nll, self.llikes, self.sampler = \
                         self.model.build_graph(inputs_pl, conditioning_pl)
-                with tf.variable_scope('train'):
-                    self.trn = trainer.RedTrainer(
-                        fetchers, self.nll, inputs_pl,
-                        self.llikes,
-                        conditioning_data=conditioning_pl,
-                        batch_size=config.batch_size,
-                        sess=self.sess,
-                        init_lr=config.init_lr,
-                        min_lr=config.min_lr,
-                        lr_decay=config.lr_decay,
-                        decay_interval=config.decay_interval,
-                        penalty=config.penalty,
-                        dropout_keeprate=dropout_keeprate,
-                        dropout_keeprate_val=config.dropout_keeprate_val,
-                        train_iters=config.train_iters,
-                        hold_iters=config.hold_iters,
-                        print_iters=config.print_iters,
-                        hold_interval=config.hold_interval,
-                        optimizer_class=config.optimizer_class,
-                        max_grad_norm=config.max_grad_norm,
-                        do_check=config.do_check,
-                        momentum=config.momentum,
-                        momentum_iter=config.momentum_iter,
-                        pretrain_scope=config.pretrain_scope,
-                        pretrain_iters=config.pretrain_iters,
-                        summary_log_path=summary_location,
-                        save_path=save_location,
-                        sampler=self.sampler,
-                        nsamp=config.nsample_batches)
+                if get_trainer:
+                    tf_config = tf.ConfigProto()
+                    tf_config.gpu_options.allow_growth = True
+                    self.sess = tf.Session(config=tf_config)
+                    with tf.variable_scope('train'):
+                        self.trn = trainer.RedTrainer(
+                            fetchers, self.nll, inputs_pl,
+                            self.llikes,
+                            conditioning_data=conditioning_pl,
+                            batch_size=config.batch_size,
+                            sess=self.sess,
+                            init_lr=config.init_lr,
+                            min_lr=config.min_lr,
+                            lr_decay=config.lr_decay,
+                            decay_interval=config.decay_interval,
+                            penalty=config.penalty,
+                            dropout_keeprate=dropout_keeprate,
+                            dropout_keeprate_val=config.dropout_keeprate_val,
+                            train_iters=config.train_iters,
+                            hold_iters=config.hold_iters,
+                            print_iters=config.print_iters,
+                            hold_interval=config.hold_interval,
+                            optimizer_class=config.optimizer_class,
+                            max_grad_norm=config.max_grad_norm,
+                            do_check=config.do_check,
+                            momentum=config.momentum,
+                            momentum_iter=config.momentum_iter,
+                            pretrain_scope=config.pretrain_scope,
+                            pretrain_iters=config.pretrain_iters,
+                            summary_log_path=summary_location,
+                            save_path=save_location,
+                            sampler=self.sampler,
+                            nsamp=config.nsample_batches)
 
     @property
     def main(self):

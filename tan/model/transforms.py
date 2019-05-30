@@ -14,7 +14,7 @@
 import tensorflow as tf
 import numpy as np
 import scipy.linalg as linalg # noqa
-import simple_rnn as simple # noqa
+from . import simple_rnn as simple
 from ..utils import nn
 
 
