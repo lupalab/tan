@@ -20,12 +20,7 @@ Watch the 5-minute video clip below for a quick summary:
 
 ***
 ## Results
-Below we compile some of the state of the art mean test log likelihoods on several benchmark dataset introduced in the [MAF paper](http://papers.nips.cc/paper/6828-masked-autoregressive-flow-for-density-estimation). Standard errors are reported when available. **Please report the published results below when reporting TANs performance on these datasets.** *Please do not report unpublished early results from an ICLR submission as done in * [[1]](https://openreview.net/pdf?id=rJxgknCcK7) [[2]](https://openreview.net/pdf?id=rJxgknCcK7).
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+Below we compile some of the state of the art mean test log likelihoods on several benchmark dataset introduced in the [MAF paper](http://papers.nips.cc/paper/6828-masked-autoregressive-flow-for-density-estimation). Standard errors are reported when available. **Please report the published results below when reporting TANs performance on these datasets.** _Please do not report unpublished early results from an ICLR submission as done in_ [[1]](https://openreview.net/pdf?id=rJxgknCcK7) [[2]](https://openreview.net/pdf?id=rJxgknCcK7).
 
 | Method        | POWER        | GAS          | HEPMASS      | MINIBOONE    | BSDS300
 | ------------- |------------- |------------- |------------- |------------- |------------- |
