@@ -27,8 +27,8 @@ Below we compile some of the state of the art mean test log likelihoods on sever
 | TANs [[*2018*]](http://proceedings.mlr.press/v80/oliva18a.html)   | *0.60 ± 0.01* | **12.06 ± 0.02** | **−13.78 ± 0.02** | −11.01 ± 0.48 | **159.80 ± 0.07**
 | SOS [[*2019*]](https://arxiv.org/pdf/1905.02325.pdf)          | *0.60 ± 0.01* | 11.99 ± 0.41     | -15.15 ± 0.10 | -8.90 ± 0.11 | 157.48 ± 0.41
 | FFJORD [[*2019*]](https://openreview.net/pdf?id=rJxgknCcK7)       | 0.46 | 8.59 | -14.92 | -10.43 | 157.40 |
-| NAF DDSF (5) [[*2018*]](https://openreview.net/pdf?id=rJxgknCcK7) | *0.62 ± 0.01* | 11.91 ± 0.13   | -15.09 ± 0.40 | **-8.86 ± 0.15**      | 157.73 ± 0.04
-| NAF DDSF (10) [[*2018*]](https://openreview.net/pdf?id=rJxgknCcK7) | *0.60 ± 0.02* | 11.96 ± 0.33     | -15.32 ± 0.23 | -9.01 ± 0.01      | 157.43 ± 0.30
+| NAF DDSF (5) [[*2018*]](http://proceedings.mlr.press/v80/huang18d/huang18d.pdf) | *0.62 ± 0.01* | 11.91 ± 0.13   | -15.09 ± 0.40 | **-8.86 ± 0.15**      | 157.73 ± 0.04
+| NAF DDSF (10) [[*2018*]](http://proceedings.mlr.press/v80/huang18d/huang18d.pdf) | *0.60 ± 0.02* | 11.96 ± 0.33     | -15.32 ± 0.23 | -9.01 ± 0.01      | 157.43 ± 0.30
 | MAF (5) [[*2017*]](http://papers.nips.cc/paper/6828-masked-autoregressive-flow-for-density-estimation)      | 0.14 ± 0.01 | 9.07 ± 0.02  | -17.70 ± 0.02 | -11.75 ± 0.44 | 155.69 ± 0.28
 | MAF (10) [[*2017*]](http://papers.nips.cc/paper/6828-masked-autoregressive-flow-for-density-estimation)      | 0.24 ± 0.01 | 10.08 ± 0.02 | -17.73 ± 0.02 | -12.24 ± 0.45 | 154.93 ± 0.28
 | MAF MoG (5) [[*2017*]](http://papers.nips.cc/paper/6828-masked-autoregressive-flow-for-density-estimation)   | 0.30 ± 0.01 | 9.59 ± 0.02  | -17.39 ± 0.02 | -11.68 ± 0.44 | 156.36 ± 0.28
