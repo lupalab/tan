@@ -27,8 +27,8 @@ Below we compile some of the state of the art mean test log likelihoods on sever
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
 
-| Method        | POWER           | GAS  | HEPMASS  | MINIBOONE  |BSDS300
-| ------------- |
+| Method        | POWER        | GAS          | HEPMASS      | MINIBOONE    | BSDS300
+| ------------- |------------- |------------- |------------- |------------- |------------- |
 | TANs [[*2018*]](http://proceedings.mlr.press/v80/oliva18a.html)   | *0.60 ± 0.01* | **12.06 ± 0.02** | **−13.78 ± 0.02** | −11.01 ± 0.48 | **159.80 ± 0.07**
 | SOS [[*2019*]](https://arxiv.org/pdf/1905.02325.pdf)          | *0.60 ± 0.01* | 11.99 ± 0.41     | -15.15 ± 0.10 | -8.90 ± 0.11 | 157.48 ± 0.41
 | FFJORD [[*2019*]](https://openreview.net/pdf?id=rJxgknCcK7)       | 0.46 | 8.59 | -14.92 | -10.43 | 157.40 |
@@ -58,6 +58,7 @@ res = mdemo.main(dataset=dname)
 ```
 where `dname` is one of {`maf_power`, `maf_gas`, `maf_hepmass`, `maf_miniboone`, `maf_bsds`}.
 A scatter plot of samples projected into the 2d space of first and last dimensions is also saved (by default in `~/data/tan/maf_*/`); for example for `maf_hepmass`:
+
 [![hepmass](https://i.imgur.com/VWXasRy.png "scatter2d")](https://www.facebook.com/icml.imls/videos/432151720632682/?t=2620)
 
 Note that the above validates across multiple random initializations (*open question: how to best initialize?*), if you wish to only train on one initialization, then run `res = mdemo.main(dataset=dname, ntrls=1)`.
