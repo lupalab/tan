@@ -5,7 +5,7 @@ import matplotlib; matplotlib.use('Agg')  # noqa
 import matplotlib.pyplot as plt  # noqa
 from datetime import datetime
 from ..experiments import runner
-from ..data import bsds, hepmass, miniboone, power, gas, miniboone_noprune, traffic
+from ..data import bsds, hepmass, miniboone, power, gas, miniboone_noprune, traffic, electricity
 from ..model import transforms as trans
 
 
@@ -26,6 +26,8 @@ def download_and_make_data(dataset, datadir):
         gas.download_and_make_data(datadir)
     elif dataset == 'traffic':
         traffic.download_and_make_data(datadir)
+    elif dataset == 'electricity':
+        electricity.download_and_make_data(datadir)
     else:
         raise NotImplementedError
     return None
